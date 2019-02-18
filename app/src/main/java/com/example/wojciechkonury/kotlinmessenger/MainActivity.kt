@@ -33,8 +33,6 @@ class MainActivity : AppCompatActivity() {
         val email = email_edittext_register.text.toString()
         val password = password_edittext_register.text.toString()
 
-        Log.d("MainActivity", "Email: " + email)
-        Log.d("MainActivity", "Password: " + password)
 
         if(email.isEmpty() || password.isEmpty()){
             Toast.makeText(this, "Email or password is empty", Toast.LENGTH_SHORT).show()
@@ -47,10 +45,10 @@ class MainActivity : AppCompatActivity() {
                 if(!it.isSuccessful) return@addOnCompleteListener
 
                 //else if Successful
-                Log.d("MainActivity", "Successfully created user with uid: " + it.result.user.uid)
+                Log.d("Firebase", "Successfully created user with uid: " + it.result.user.uid)
             }
             .addOnFailureListener{
-                Log.d("MainActivity", "Failed to create user: " + it.message)
+                Log.d("Firebase", "Failed to create user: " + it.message)
                 Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
             }
     }
