@@ -2,4 +2,6 @@
     <string name="app_name">KotlinMessenger</string>
     <string name="register_button">Register</string>
     <string name="register_accountinfo">Already have an accout?</string>
+    <string name="login_backtoregistration">Back to registration</string>
+    <string name="login_button">Login</string>
 </resources>
