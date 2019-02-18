@@ -4,4 +4,5 @@
     <string name="register_accountinfo">Already have an accout?</string>
     <string name="login_backtoregistration">Back to registration</string>
     <string name="login_button">Login</string>
+    <string name="register_selectphoto_button">Select photo</string>
 </resources>
