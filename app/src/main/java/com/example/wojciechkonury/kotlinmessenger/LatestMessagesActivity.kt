@@ -34,7 +34,8 @@ class LatestMessagesActivity : AppCompatActivity() {
         //check what button is clicked
         when(item?.itemId){
             R.id.menu_new_message -> {
-
+                val intent = Intent(this, NewMessageActivity::class.java)
+                startActivity(intent)
             }
             R.id.menu_sign_out -> {
                 //log out
