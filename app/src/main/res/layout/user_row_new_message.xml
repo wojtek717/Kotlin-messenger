@@ -3,21 +3,25 @@
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
-                                             android:layout_height="wrap_content">
+                                             android:layout_height="wrap_content" android:layout_marginBottom="16dp">
 
     <TextView
             android:text="User name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/textView" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            app:layout_constraintStart_toEndOf="@+id/imageView" android:layout_marginStart="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView" app:layout_constraintTop_toTopOf="@+id/imageView"
+            android:id="@+id/username_textview_newmessage" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toEndOf="@+id/image_imagieview_newmessage" android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/image_imagieview_newmessage"
+            app:layout_constraintTop_toTopOf="@+id/image_imagieview_newmessage"
             android:textStyle="bold" android:textSize="16sp" android:textColor="@android:color/black"/>
     <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="60dp"
             android:layout_height="60dp" app:srcCompat="@drawable/common_google_signin_btn_icon_light"
-            android:id="@+id/imageView"
+            android:id="@+id/image_imagieview_newmessage"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="16dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="16dp"/>
+            android:layout_marginStart="16dp" android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+    app:civ_border_width="2dp"/>
 </android.support.constraint.ConstraintLayout>
