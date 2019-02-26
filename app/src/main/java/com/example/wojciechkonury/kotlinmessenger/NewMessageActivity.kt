@@ -1,5 +1,6 @@
 package com.example.wojciechkonury.kotlinmessenger
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -43,6 +44,14 @@ class NewMessageActivity : AppCompatActivity() {
                     if(user != null)
                     {
                         adapter.add(UserItem(user))
+                    }
+
+                    adapter.setOnItemClickListener{ item, view ->
+
+                        val intent = Intent(view.context, ChatLogActivity::class.java)
+
+                        startActivity(intent)
+                        finish()
                     }
 
                 }
