@@ -17,6 +17,8 @@ import kotlinx.android.synthetic.main.activity_latest_messages.*
 import kotlinx.android.synthetic.main.activity_new_message.*
 import kotlinx.android.synthetic.main.user_row_new_message.view.*
 
+const val USER_KEY = "USER_KEY"
+
 class NewMessageActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +30,7 @@ class NewMessageActivity : AppCompatActivity() {
         fetchUsers()
 
     }
+
 
     private fun fetchUsers(){
         val ref = FirebaseDatabase.getInstance().getReference("/users")
@@ -47,8 +50,11 @@ class NewMessageActivity : AppCompatActivity() {
                     }
 
                     adapter.setOnItemClickListener{ item, view ->
+                        val userItem = item as UserItem
 
-                        val intent = Intent(view.context, ChatLogActivity::class.java)
+                        val intent = Intent(view.context, ChatLogActivity::class.java).apply {
+                            putExtra(USER_KEY, userItem.user.username)
+                        }
 
                         startActivity(intent)
                         finish()

@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView"
-            android:background="@drawable/rounded_from_message"
+            android:background="@drawable/rounded_to_message"
             android:textColor="@android:color/white"
             android:padding="16dp"
             android:maxWidth="240dp" android:layout_marginTop="8dp"
