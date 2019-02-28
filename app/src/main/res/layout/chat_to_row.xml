@@ -17,7 +17,7 @@
             android:text="This is FROM message that extens to other lines"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView"
+            android:id="@+id/textView_to_row"
             android:background="@drawable/rounded_to_message"
             android:textColor="@android:color/white"
             android:padding="16dp"
