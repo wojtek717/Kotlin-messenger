@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.example.wojciechkonury.kotlinmessenger.LatestMessagesActivity.Companion.currentUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -131,6 +132,12 @@ class ChatFromItem(val text: String, val user: User) : Item<ViewHolder>(){
 class ChatToItem(val text: String) : Item<ViewHolder>(){
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.textView_to_row.text = text
+
+        val targetPlaceImage = viewHolder.itemView.imageView_to_row
+
+        if(currentUser != null){
+            Picasso.get().load(currentUser?.profileImageUrl).into(targetPlaceImage)
+        }
     }
 
     override fun getLayout(): Int {
