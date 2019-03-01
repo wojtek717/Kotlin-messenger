@@ -38,20 +38,21 @@ class ChatLogActivity : AppCompatActivity() {
             performSendMessage(user)
 
             edittext_chat_log.text.clear()
+            recyclerview_chatlog.scrollToPosition(adapter.itemCount - 1)
         }
     }
 
     fun listenForMessages(user: User){
-        val ref = FirebaseDatabase.getInstance().getReference("/message")
+        val fromId = FirebaseAuth.getInstance().uid
+        val toId = user.uid
+
+        val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId")
 
         ref.addChildEventListener(object: ChildEventListener{
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
                 val chatMessage = p0.getValue(ChatMessage::class.java)
 
                 if(chatMessage != null){
-
-                    if((chatMessage.fromId == FirebaseAuth.getInstance().uid && chatMessage.toId == user.uid) ||
-                        (chatMessage.fromId == user.uid && chatMessage.toId == FirebaseAuth.getInstance().uid)) {
 
                         if (chatMessage.fromId == FirebaseAuth.getInstance().uid) {
 
@@ -63,11 +64,7 @@ class ChatLogActivity : AppCompatActivity() {
                             Log.d("Sprawdzonko", "WYKONANKO")
                         }
                         Log.d("Sprawdzonko", "toId: " + chatMessage.toId + "\n user.id: " + user.uid)
-                    }
                 }
-
-
-
             }
 
             override fun onCancelled(p0: DatabaseError) {
@@ -89,7 +86,8 @@ class ChatLogActivity : AppCompatActivity() {
     }
 
     fun performSendMessage(user: User){
-        val ref = FirebaseDatabase.getInstance().getReference("/message").push()
+//        val ref = FirebaseDatabase.getInstance().getReference("/message").push()
+
         val messageText = edittext_chat_log.text.toString()
 
         val fromId = FirebaseAuth.getInstance().uid
@@ -99,9 +97,21 @@ class ChatLogActivity : AppCompatActivity() {
             return
         }
 
+        val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId").push()
+        val toref = FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId").push()
+
         val chatMessage = ChatMessage(ref.key!!, messageText, fromId, toId, System.currentTimeMillis()/1000)
 
         ref.setValue(chatMessage)
+            .addOnSuccessListener {
+                Log.d("ChatLog", "Message send")
+            }
+            .addOnFailureListener{
+                Log.d("ChatLog", "Cant send message")
+                Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+            }
+
+        toref.setValue(chatMessage)
             .addOnSuccessListener {
                 Log.d("ChatLog", "Message send")
             }
