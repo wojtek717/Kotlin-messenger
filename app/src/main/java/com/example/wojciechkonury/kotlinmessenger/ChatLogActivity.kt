@@ -9,6 +9,7 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
@@ -57,7 +58,7 @@ class ChatLogActivity : AppCompatActivity() {
                         }
 
                         if (chatMessage.fromId == user.uid) {
-                            adapter.add(ChatFromItem(chatMessage.text))
+                            adapter.add(ChatFromItem(chatMessage.text, user))
                             Log.d("Sprawdzonko", "WYKONANKO")
                         }
                         Log.d("Sprawdzonko", "toId: " + chatMessage.toId + "\n user.id: " + user.uid)
@@ -112,10 +113,13 @@ class ChatLogActivity : AppCompatActivity() {
     }
 }
 
-
-class ChatFromItem(val text: String) : Item<ViewHolder>(){
+//left side
+class ChatFromItem(val text: String, val user: User) : Item<ViewHolder>(){
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.textView_from_row.text = text
+
+        val targetPlaceImage = viewHolder.itemView.imageView_from_row
+        Picasso.get().load(user.profileImageUrl).into(targetPlaceImage)
     }
 
     override fun getLayout(): Int {
