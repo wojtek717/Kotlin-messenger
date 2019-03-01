@@ -48,16 +48,19 @@ class ChatLogActivity : AppCompatActivity() {
 
                 if(chatMessage != null){
 
-                    if(chatMessage.fromId == FirebaseAuth.getInstance().uid && chatMessage.toId == user.uid){
+                    if((chatMessage.fromId == FirebaseAuth.getInstance().uid && chatMessage.toId == user.uid) ||
+                        (chatMessage.fromId == user.uid && chatMessage.toId == FirebaseAuth.getInstance().uid)) {
 
-                        if(chatMessage.fromId == FirebaseAuth.getInstance().uid){
+                        if (chatMessage.fromId == FirebaseAuth.getInstance().uid) {
 
                             adapter.add(ChatToItem(chatMessage.text))
                         }
 
-                        else if(chatMessage.toId == user.uid){
+                        if (chatMessage.fromId == user.uid) {
                             adapter.add(ChatFromItem(chatMessage.text))
+                            Log.d("Sprawdzonko", "WYKONANKO")
                         }
+                        Log.d("Sprawdzonko", "toId: " + chatMessage.toId + "\n user.id: " + user.uid)
                     }
                 }
 
