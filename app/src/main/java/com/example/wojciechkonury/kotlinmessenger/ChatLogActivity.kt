@@ -99,6 +99,8 @@ class ChatLogActivity : AppCompatActivity() {
 
         val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId").push()
         val toref = FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId").push()
+        val latestMessageRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$toId")
+        val latestMessageToRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$toId/$fromId")
 
         val chatMessage = ChatMessage(ref.key!!, messageText, fromId, toId, System.currentTimeMillis()/1000)
 
@@ -119,6 +121,9 @@ class ChatLogActivity : AppCompatActivity() {
                 Log.d("ChatLog", "Cant send message")
                 Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
             }
+
+        latestMessageRef.setValue(chatMessage)
+        latestMessageToRef.setValue(chatMessage)
 
 
     }
