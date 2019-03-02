@@ -65,6 +65,7 @@ class ChatLogActivity : AppCompatActivity() {
                         }
                         Log.d("Sprawdzonko", "toId: " + chatMessage.toId + "\n user.id: " + user.uid)
                 }
+                recyclerview_chatlog.scrollToPosition(adapter.itemCount - 1)
             }
 
             override fun onCancelled(p0: DatabaseError) {

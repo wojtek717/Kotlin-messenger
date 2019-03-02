@@ -3,6 +3,7 @@ package com.example.wojciechkonury.kotlinmessenger
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -29,11 +30,22 @@ class LatestMessagesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_latest_messages)
 
         recyckerView_latest_messages.adapter = adapter
+        //Horizontal line between items
+        recyckerView_latest_messages.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL))
 
         verifyUsersIsLoggedIn()
         fetchCurrentUser()
 
         listenForLatestMessages()
+        
+        adapter.setOnItemClickListener { item, view ->
+            val chatRow = item as LatestMessageRow
+            val intent = Intent(this, ChatLogActivity::class.java).apply {
+                putExtra(USER_KEY, chatRow.chatPartner)
+            }
+            startActivity(intent)
+
+        }
     }
 
     private fun refreshLatestMessagesRecyclerView(){
@@ -133,37 +145,3 @@ class LatestMessagesActivity : AppCompatActivity() {
     }
 }
 
-class LatestMessageRow(val chatMessage: ChatMessage): Item<ViewHolder>(){
-    override fun bind(viewHolder: ViewHolder, position: Int) {
-        val chatPartnerId: String
-
-        if (chatMessage.fromId == FirebaseAuth.getInstance().uid){
-            chatPartnerId = chatMessage.toId
-        }else{
-            chatPartnerId = chatMessage.fromId
-        }
-
-        val ref = FirebaseDatabase.getInstance().getReference("/users/$chatPartnerId")
-
-        ref.addListenerForSingleValueEvent(object: ValueEventListener{
-            override fun onDataChange(p0: DataSnapshot) {
-                val chatPartner = p0.getValue(User::class.java)
-                val profileImageTarger = viewHolder.itemView.imageView_latest_messages_row
-
-                viewHolder.itemView.textView_username.text = chatPartner?.username
-                Picasso.get().load(chatPartner?.profileImageUrl).into(profileImageTarger)
-            }
-
-            override fun onCancelled(p0: DatabaseError) {
-
-            }
-        })
-
-
-        viewHolder.itemView.textView_latest_message.text = chatMessage.text
-    }
-
-    override fun getLayout(): Int {
-        return R.layout.latest_messages_row
-    }
-}
